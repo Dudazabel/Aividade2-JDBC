@@ -1,11 +1,12 @@
 package org.example.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Pedido {
 
     private int id_cliente;
-    private Date data_pedido;
+    private LocalDate data_pedido;
     private Float volume_m3;
     private Float peso_kg;
     private String status_pedido;
@@ -18,7 +19,7 @@ public class Pedido {
         this.status_pedido = "";
     }
 
-    public Pedido(int id_cliente, Date data_pedido, Float volume_m3, Float peso_kg, String status_pedido) {
+    public Pedido(int id_cliente, LocalDate data_pedido, Float volume_m3, Float peso_kg, String status_pedido) {
         this.id_cliente = id_cliente;
         this.data_pedido = data_pedido;
         this.volume_m3 = volume_m3;
@@ -34,11 +35,11 @@ public class Pedido {
         this.id_cliente = id_cliente;
     }
 
-    public Date getData_pedido() {
+    public LocalDate getData_pedido() {
         return data_pedido;
     }
 
-    public void setData_pedido(Date data_pedido) {
+    public void setData_pedido(LocalDate data_pedido) {
         this.data_pedido = data_pedido;
     }
 

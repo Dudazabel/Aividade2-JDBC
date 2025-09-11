@@ -1,37 +1,38 @@
 package org.example.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Entrega {
 
-    private int id_cliente;
+    private int id_pedido;
     private int id_motora;
-    private Date data_saida;
-    private Date data_entrega;
+    private LocalDate data_saida;
+    private LocalDate data_entrega;
     private String status_entrega;
 
     public Entrega() {
-        this.id_cliente = 0;
+        this.id_pedido = 0;
         this.id_motora = 0;
         this.data_saida = null;
         this.data_entrega = null;
         this.status_entrega = "";
     }
 
-    public Entrega(int id_cliente, int id_motora, Date data_saida, Date data_entrega, String status_entrega) {
-        this.id_cliente = id_cliente;
+    public Entrega(int id_pedido, int id_motora, LocalDate data_saida, LocalDate data_entrega, String status_entrega) {
+        this.id_pedido = id_pedido;
         this.id_motora = id_motora;
         this.data_saida = data_saida;
         this.data_entrega = data_entrega;
         this.status_entrega = status_entrega;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
+    public int getId_pedido() {
+        return id_pedido;
     }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId_pedido(int id_pedido) {
+        this.id_pedido = id_pedido;
     }
 
     public int getId_motora() {
@@ -42,19 +43,19 @@ public class Entrega {
         this.id_motora = id_motora;
     }
 
-    public Date getData_saida() {
+    public LocalDate getData_saida() {
         return data_saida;
     }
 
-    public void setData_saida(Date data_saida) {
+    public void setData_saida(LocalDate data_saida) {
         this.data_saida = data_saida;
     }
 
-    public Date getData_entrega() {
+    public LocalDate getData_entrega() {
         return data_entrega;
     }
 
-    public void setData_entrega(Date data_entrega) {
+    public void setData_entrega(LocalDate data_entrega) {
         this.data_entrega = data_entrega;
     }
 

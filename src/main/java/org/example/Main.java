@@ -1,9 +1,24 @@
 package org.example;
 
+import org.example.DAO.ClienteDAO;
+import org.example.DAO.EntregaDAO;
+import org.example.DAO.MotoristaDAO;
+import org.example.DAO.PedidoDAO;
+import org.example.model.Cliente;
+import org.example.model.Motorista;
+import org.example.model.Pedido;
+
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
     static Scanner leia = new Scanner(System.in);
+
     public static void main(String[] args) {
         inicio();
     }
@@ -42,13 +57,13 @@ public class Main {
                 cadastrarCliente();
             }
             case 2 ->{
-
+                cadastrarMotorista();
             }
             case 3 ->{
-
+                criarPedido();
             }
             case 4 ->{
-
+                gerarEntrega();
             }
             case 5 ->{
 
@@ -96,9 +111,107 @@ public class Main {
     }
 
     public static void cadastrarCliente(){
+        var dao = new ClienteDAO();
         System.out.println("---CADASTRAR CLIENTE---");
+        System.out.println("Digite o nome do cliente: ");
+        String nome = leia.nextLine();
+        System.out.println("Digite o cpf/cnpj do cliente: ");
+        int cpf_cnpj = leia.nextInt();
+        System.out.println("Digite o endereco do cliente: ");
+        leia.nextLine();
+        String endereco = leia.nextLine();
+        System.out.println("Digite a cidade do cliente: ");
+        String cidade = leia.nextLine();
+        System.out.println("Digite o estado do cliente: ");
+        String estado = leia.nextLine();
+
+        try{
+            var cliente = new Cliente(nome, cpf_cnpj, endereco, cidade, estado);
+            dao.inserirCliente(cliente);
+            System.out.println("Cliente cadastrado com sucesso!");
+
+        }catch (SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao cadastrar cliente.");
+        }
+    }
+
+    public static void cadastrarMotorista(){
+        var dao = new MotoristaDAO();
+        System.out.println("---CADASTRAR MOTORISTA---");
+        System.out.println("Digite o nome do motorista: ");
+        String nome = leia.nextLine();
+        System.out.println("Digite a cnh do motorista: ");
+        int cnh = leia.nextInt();
+        System.out.println("Digite o veículo do motorista: ");
+        leia.nextLine();
+        String veiculo = leia.nextLine();
+        System.out.println("Digite a cidade base do motorista: ");
+        String cidade_base = leia.nextLine();
+
+        try{
+            var motorista = new Motorista(nome, cnh, veiculo, cidade_base);
+            dao.inserirMotorista(motorista);
+            System.out.println("Motorista cadastrado com sucesso!");
+
+        }catch (SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao cadastrar motorista.");
+        }
+    }
+
+    public static void criarPedido(){
+        var dao = new PedidoDAO();
+
+        System.out.println("---CRIAR PEDIDO---");
+        System.out.println("Digite o ID do cliente que efetuou o pedido: ");
+        int id_cliente = leia.nextInt();
+        System.out.println("Digite o volume do pedido em m3: ");
+        float volume_m3 = leia.nextFloat();
+        System.out.println("Digite o peso do pedido em kg: ");
+        float peso_kg = leia.nextFloat();
+        leia.nextLine();
+        System.out.println("Informe o status do pedido (pendente, entregue, cancelado): ");
+        String status_pedido = leia.nextLine();
+
+        try {
+            var pedido = new Pedido(id_cliente, null, volume_m3, peso_kg, status_pedido);
+            dao.inserirPedido(pedido);
+            System.out.println("Pedido criado com sucesso!");
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao criar pedido.");
+        }
 
     }
 
+    public static void gerarEntrega(){
+        var dao = new EntregaDAO();
+
+        System.out.println("---GERAR ENTREGA---");
+        System.out.println("Digite o ID do pedido da entrega: ");
+        int id_pedido = leia.nextInt();
+        System.out.println("Digite o ID do motorista que realiza-rá a entrega: ");
+        int id_motora = leia.nextInt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.println("Digite a data de saída: ");
+        String data_saida = leia.nextLine();
+        try {
+            LocalDate data = LocalDate.parse(data_saida, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de data inválido! Por favor, use o formato dd/MM/yyyy.");
+        }
+        System.out.println("Digite a data de entrega: ");
+        String data2 = leia.nextLine();
+        try {
+            LocalDate data_saida = LocalDate.parse(data, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de data inválido! Por favor, use o formato dd/MM/yyyy.");
+        }
+
+
+
+    }
 
 }

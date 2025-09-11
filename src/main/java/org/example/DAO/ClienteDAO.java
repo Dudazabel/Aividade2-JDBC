@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ClienteDAO {
 
-    public void inserirDados(Cliente cliente)throws SQLException {
+    public void inserirCliente(Cliente cliente)throws SQLException {
 
         String query = "INSERT INTO cliente(nome, cpf_cnpj, endereco, cidade, estado) VALUES (?,?,?,?,?)";
 
@@ -21,6 +21,8 @@ public class ClienteDAO {
             stmt.setString(3, cliente.getEndereco());
             stmt.setString(4, cliente.getCidade());
             stmt.setString(5, cliente.getEstado());
+            stmt.executeUpdate();
+
         }
     }
 }
