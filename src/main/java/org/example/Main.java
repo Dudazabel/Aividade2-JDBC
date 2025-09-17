@@ -1,19 +1,16 @@
 package org.example;
 
-import org.example.DAO.ClienteDAO;
-import org.example.DAO.EntregaDAO;
-import org.example.DAO.MotoristaDAO;
-import org.example.DAO.PedidoDAO;
-import org.example.model.Cliente;
-import org.example.model.Motorista;
-import org.example.model.Pedido;
+import org.example.DAO.*;
+import org.example.model.*;
 
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -66,10 +63,10 @@ public class Main {
                 gerarEntrega();
             }
             case 5 ->{
-
+                registrarHistorico();
             }
             case 6 ->{
-
+                atualizarEntrega();
             }
             case 7 ->{
 
@@ -187,28 +184,101 @@ public class Main {
     }
 
     public static void gerarEntrega(){
+
+        LocalDate data_entrega = null;
+        LocalDate data_saida = null;
+
         var dao = new EntregaDAO();
 
         System.out.println("---GERAR ENTREGA---");
+
         System.out.println("Digite o ID do pedido da entrega: ");
         int id_pedido = leia.nextInt();
+
         System.out.println("Digite o ID do motorista que realiza-rá a entrega: ");
         int id_motora = leia.nextInt();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.println("Digite a data de saída: ");
-        String data_saida = leia.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        leia.nextLine();
+
         try {
-            LocalDate data = LocalDate.parse(data_saida, formatter);
+            System.out.println("Digite a data de saída: ");
+            String data = leia.nextLine();
+            data_saida = LocalDate.parse(data);
+
         } catch (DateTimeParseException e) {
             System.out.println("Formato de data inválido! Por favor, use o formato dd/MM/yyyy.");
         }
-        System.out.println("Digite a data de entrega: ");
-        String data2 = leia.nextLine();
+
         try {
-            LocalDate data_saida = LocalDate.parse(data, formatter);
+            System.out.println("Digite a data de entrega: ");
+            String data2 = leia.nextLine();
+            data_entrega = LocalDate.parse(data2);
+
         } catch (DateTimeParseException e) {
             System.out.println("Formato de data inválido! Por favor, use o formato dd/MM/yyyy.");
         }
+
+        System.out.println("Informe o status da entrega (em-rota, entregue, atrasada): ");
+        String status_entrega = leia.nextLine();
+
+        try{
+            var entrega = new Entrega(id_pedido, id_motora, data_saida, data_entrega, status_entrega);
+            dao.inserirEntrega(entrega);
+            System.out.println("Entrega cadastrada com sucesso.");
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao cadastrar entrega.");
+        }
+    }
+
+    public static void registrarHistorico(){
+        System.out.println("---REGISTRAR HISTÓRICO---");
+
+        LocalDate data_evento = null;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        System.out.println("Digite o ID da entrega: ");
+        int id_entrega = leia.nextInt();
+
+        leia.nextLine();
+
+        try {
+            System.out.println("Digite a data de entrega: ");
+            String dataE = leia.nextLine();
+            data_evento = LocalDate.parse(dataE);
+
+        }catch (DateTimeParseException e) {
+            System.out.println("Formato de data inválido! Por favor, use o formato dd/MM/yyyy.");
+        }
+
+        System.out.println("Descrição da entrega: ");
+        String descricao = leia.nextLine();
+
+        try{
+            var dao = new HistoricoDAO();
+
+            var historico = new HistoricoEntrega(id_entrega, data_evento, descricao);
+            dao.inserirHstorico(historico);
+            System.out.println("Histórico adicionado com sucesso!");
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro de inserção.");
+        }
+    }
+
+    public static void atualizarEntrega(){
+        System.out.println("---ATUALIZAR CONTATO---");
+
+        var entrega = new Entrega();
+
+        List<Integer> idEntregas = new ArrayList<>();
+
+        var dao = new EntregaDAO();
+
 
 
 

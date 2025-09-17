@@ -1,11 +1,12 @@
 package org.example.model;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDate;
 
 public class HistoricoEntrega {
 
     private int id_entrega;
-    private Data data_evento;
+    private LocalDate data_evento;
     private String descricao;
 
     public HistoricoEntrega() {
@@ -14,7 +15,7 @@ public class HistoricoEntrega {
         this.descricao = "";
     }
 
-    public HistoricoEntrega(int id_entrega, Data data_evento, String descricao) {
+    public HistoricoEntrega(int id_entrega, LocalDate data_evento, String descricao) {
         this.id_entrega = id_entrega;
         this.data_evento = data_evento;
         this.descricao = descricao;
@@ -28,11 +29,11 @@ public class HistoricoEntrega {
         this.id_entrega = id_entrega;
     }
 
-    public Data getData_evento() {
+    public LocalDate getData_evento() {
         return data_evento;
     }
 
-    public void setData_evento(Data data_evento) {
+    public void setData_evento(LocalDate data_evento) {
         this.data_evento = data_evento;
     }
 
