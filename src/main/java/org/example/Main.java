@@ -75,10 +75,10 @@ public class Main {
                 relatorioMaisEntregas();
             }
             case 9 ->{
-
+                relatorioMaisVolume();
             }
             case 10 ->{
-
+                relatorioPedidosPendentes();
             }
             case 11 ->{
 
@@ -359,6 +359,7 @@ public class Main {
         try{
             List<Motorista> motorista = dao.maisEntregas();
             motoristaMaisEntregas(motorista);
+
         }catch(SQLException erro){
             erro.printStackTrace();
             System.out.println("Erro ao identificar motorista.");
@@ -375,6 +376,58 @@ public class Main {
             System.out.println("Cidade base: " + motora.getCidadeBase());
             System.out.println("Total de entregas: " + motora.getTotal_entregas());
 
+        }
+    }
+
+    public static void relatorioMaisVolume(){
+        System.out.println("---CLIENTE COM MAIS VOLUME---");
+
+        var dao = new ClienteDAO();
+
+        try{
+            List<Cliente> cliente = dao.clienteMaiorVolume();
+            clienteMaisVolume(cliente);
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+        }
+    }
+
+    public static void clienteMaisVolume(List<Cliente> clientes){
+
+        for (Cliente cliente : clientes){
+            System.out.println("ID: " + cliente.getId_cliente());
+            System.out.println("Nome: " + cliente.getNome());
+            System.out.println("CPF ou CNPJ: " + cliente.getCpf_cnpj());
+            System.out.println("Endereço: " + cliente.getEndereco());
+            System.out.println("Cidade: " + cliente.getCidade());
+            System.out.println("Estado: " + cliente.getEstado());
+            System.out.println("Volume: " + cliente.getVolume());
+        }
+    }
+
+    public static void relatorioPedidosPendentes(){
+        System.out.println("---PEDIDOS PENDENTES---");
+
+        var dao = new PedidoDAO();
+
+        try{
+            List<Pedido> pedido = dao.pedidosPendentes();
+            pedidosPendentes(pedido);
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+        }
+
+    }
+
+    public static void pedidosPendentes(List<Pedido> pedidos){
+
+        for(Pedido pedido : pedidos){
+            System.out.println("----------------");
+            System.out.println("Estado: " + pedido.getEstado());
+            System.out.println("Quantidade de pedidos pendente: " + pedido.getQuantidade_pedidos());
+            System.out.println("----------------");
         }
     }
 

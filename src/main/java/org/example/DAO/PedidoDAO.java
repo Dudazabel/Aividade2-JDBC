@@ -6,7 +6,10 @@ import org.example.util.conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoDAO {
@@ -26,7 +29,26 @@ public class PedidoDAO {
         }
     }
 
-    public List<Cliente> clienteMaiorVolume() throws SQLException{
-        String query = "SELECT c.id_cliente, c.nome, c.cpf_cnpj, c.endereco, c.cidade, c.estado, p.volume_m3 FROM cliente c JOIN pedido p ON c.id_cliente = p.id_cliente WHERE p.volume_m3 = (SELECT MAX(volume_m3)FROM pedido)";
+    public List<Pedido> pedidosPendentes() throws SQLException{
+        String query = "SELECT c.estado, COUNT(p.id_pedido) AS quantidade_pedidos FROM pedido p JOIN cliente c ON p.id_cliente = c.id_cliente WHERE p.status_pedido = 'pendente' GROUP BY c.estado, p.status_pedido ORDER BY c.estado;";
+
+        List<Pedido> Pendentes = new ArrayList<>();
+
+        try(Connection conn = conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(query)){
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                String estado = rs.getString("estado");
+                int quantidade_pedidos = rs.getInt("quantidade_pedidos");
+
+                var pedido = new Pedido(estado, quantidade_pedidos);
+                Pendentes.add(pedido);
+
+            }
+        }
+
+        return Pendentes;
     }
+
 }

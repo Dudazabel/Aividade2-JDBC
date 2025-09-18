@@ -10,6 +10,8 @@ public class Pedido {
     private Float volume_m3;
     private Float peso_kg;
     private String status_pedido;
+    private String estado;
+    private int quantidade_pedidos;
 
     public Pedido() {
         this.id_cliente = 0;
@@ -25,6 +27,11 @@ public class Pedido {
         this.volume_m3 = volume_m3;
         this.peso_kg = peso_kg;
         this.status_pedido = status_pedido;
+    }
+
+    public Pedido(String estado, int quantidade_pedidos) {
+        this.estado = estado;
+        this.quantidade_pedidos = quantidade_pedidos;
     }
 
     public int getId_cliente() {
@@ -65,5 +72,21 @@ public class Pedido {
 
     public void setStatus_pedido(String status_pedido) {
         this.status_pedido = status_pedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getQuantidade_pedidos() {
+        return quantidade_pedidos;
+    }
+
+    public void setQuantidade_pedidos(int quantidade_pedidos) {
+        this.quantidade_pedidos = quantidade_pedidos;
     }
 }

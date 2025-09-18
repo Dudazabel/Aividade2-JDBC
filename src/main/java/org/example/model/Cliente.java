@@ -7,6 +7,8 @@ public class Cliente {
     private String endereco;
     private String cidade;
     private String estado;
+    private int id_cliente;
+    private int volume;
 
     public Cliente() {
         this.nome = "";
@@ -22,6 +24,16 @@ public class Cliente {
         this.endereco = endereco;
         this.cidade = cidade;
         this.estado = estado;
+    }
+
+    public Cliente(int id_cliente, String nome, int cpf_cnpj, String endereco, String cidade, String estado, int volume) {
+        this.id_cliente = id_cliente;
+        this.nome = nome;
+        this.cpf_cnpj = cpf_cnpj;
+        this.endereco = endereco;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.volume = volume;
     }
 
     public String getNome() {
@@ -62,5 +74,21 @@ public class Cliente {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 }
