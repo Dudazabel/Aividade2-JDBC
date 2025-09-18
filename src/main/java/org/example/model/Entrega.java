@@ -5,19 +5,14 @@ import java.time.LocalDate;
 
 public class Entrega {
 
+    private int id_entrega;
     private int id_pedido;
     private int id_motora;
     private LocalDate data_saida;
     private LocalDate data_entrega;
     private String status_entrega;
-
-    public Entrega() {
-        this.id_pedido = 0;
-        this.id_motora = 0;
-        this.data_saida = null;
-        this.data_entrega = null;
-        this.status_entrega = "";
-    }
+    private String nome_motorista;
+    private String nome_cliente;
 
     public Entrega(int id_pedido, int id_motora, LocalDate data_saida, LocalDate data_entrega, String status_entrega) {
         this.id_pedido = id_pedido;
@@ -25,6 +20,22 @@ public class Entrega {
         this.data_saida = data_saida;
         this.data_entrega = data_entrega;
         this.status_entrega = status_entrega;
+    }
+
+    public Entrega(int id_entrega, String status_entrega) {
+        this.id_entrega = id_entrega;
+        this.status_entrega = status_entrega;
+    }
+
+    public Entrega(int id_entrega, int id_pedido, int id_motora, LocalDate data_saida, LocalDate data_entrega, String status_entrega, String nome_motorista, String nome_cliente) {
+        this.id_entrega = id_entrega;
+        this.id_pedido = id_pedido;
+        this.id_motora = id_motora;
+        this.data_saida = data_saida;
+        this.data_entrega = data_entrega;
+        this.status_entrega = status_entrega;
+        this.nome_motorista = nome_motorista;
+        this.nome_cliente = nome_cliente;
     }
 
     public int getId_pedido() {
@@ -65,5 +76,29 @@ public class Entrega {
 
     public void setStatus_entrega(String status_entrega) {
         this.status_entrega = status_entrega;
+    }
+
+    public int getId_entrega() {
+        return id_entrega;
+    }
+
+    public void setId_entrega(int id_entrega) {
+        this.id_entrega = id_entrega;
+    }
+
+    public String getNome_motorista() {
+        return nome_motorista;
+    }
+
+    public void setNome_motorista(String nome_motorista) {
+        this.nome_motorista = nome_motorista;
+    }
+
+    public String getNome_cliente() {
+        return nome_cliente;
+    }
+
+    public void setNome_cliente(String nome_cliente) {
+        this.nome_cliente = nome_cliente;
     }
 }

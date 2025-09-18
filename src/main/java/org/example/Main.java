@@ -69,10 +69,10 @@ public class Main {
                 atualizarEntrega();
             }
             case 7 ->{
-
+                listarEntregas();
             }
             case 8 ->{
-
+                relatorioMaisEntregas();
             }
             case 9 ->{
 
@@ -271,17 +271,112 @@ public class Main {
     }
 
     public static void atualizarEntrega(){
-        System.out.println("---ATUALIZAR CONTATO---");
-
-        var entrega = new Entrega();
+        System.out.println("---ATUALIZAR STATUS ENTREGA---");
 
         List<Integer> idEntregas = new ArrayList<>();
+        List<Entrega> entregas = new ArrayList<>();
+
+        var dao = new EntregaDAO();
+        try{
+            entregas = dao.listarEntrega();
+            idEntregas = exibirEntregas(entregas);
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+        }
+        System.out.println("Digite o id da entrega para edição: ");
+        int id = leia.nextInt();
+        leia.nextLine();
+
+        if(idEntregas.contains(id)){
+            System.out.println("Informe o status da entrega (em-rota, entregue, atrasada):");
+            String status = leia.nextLine();
+
+            try{
+                var entrega = new Entrega (id, status);
+                dao.atualizarEntrega(entrega);
+                System.out.println("Atualizado com sucesso!");
+
+            }catch(SQLException erro){
+                erro.printStackTrace();
+                System.out.println("Erro ao atualizar.");
+            }
+        }
+    }
+
+    public static List<Integer> exibirEntregas(List<Entrega> entregas){
+        List<Integer> idEntregas = new ArrayList<>();
+
+        for(Entrega entrega : entregas){
+            System.out.println("-----------");
+            System.out.println("ID: " + entrega.getId_entrega());
+            System.out.println("Status entrega: " + entrega.getStatus_entrega());
+            System.out.println("-----------");
+
+            idEntregas.add(entrega.getId_entrega());
+        }
+
+        return idEntregas;
+    }
+
+    public static void listarEntregas(){
+        System.out.println("---LISTAR ENTREGAS---");
 
         var dao = new EntregaDAO();
 
+        try{
+            List<Entrega> entregas = dao.listarEntregaMCP();
+            exibirEntregasMCP(entregas);
 
-
-
+        }catch(SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao listar entregas.");
+        }
     }
+
+    public static void exibirEntregasMCP (List<Entrega> entregas){
+
+        for(Entrega entrega : entregas){
+            System.out.println("----------------");
+            System.out.println("ID da entrega: " + entrega.getId_entrega());
+            System.out.println("ID do pedido: " + entrega.getId_pedido());
+            System.out.println("ID do motorista: " + entrega.getId_pedido());
+            System.out.println("Data saída: " + entrega.getData_saida());
+            System.out.println("Data de entrega: " + entrega.getData_entrega());
+            System.out.println("Status entrega: " + entrega.getStatus_entrega());
+            System.out.println("Nome do motorista: " + entrega.getNome_motorista());
+            System.out.println("Nome do cliente: " + entrega.getNome_cliente());
+            System.out.println("----------------");
+
+        }
+    }
+
+    public static void relatorioMaisEntregas(){
+        System.out.println("---RELATORIO DE MOTORISTA COM MAIS ENTREGAS---");
+
+        var dao = new EntregaDAO();
+
+        try{
+            List<Motorista> motorista = dao.maisEntregas();
+            motoristaMaisEntregas(motorista);
+        }catch(SQLException erro){
+            erro.printStackTrace();
+            System.out.println("Erro ao identificar motorista.");
+        }
+    }
+
+    public static void motoristaMaisEntregas(List<Motorista> motorista){
+
+        for(Motorista motora : motorista){
+            System.out.println("ID do motorista: " + motora.getId_motora());
+            System.out.println("Nome: " + motora.getNome());
+            System.out.println("CNH: " + motora.getCnh());
+            System.out.println("Veículo: " + motora.getVeiculo());
+            System.out.println("Cidade base: " + motora.getCidadeBase());
+            System.out.println("Total de entregas: " + motora.getTotal_entregas());
+
+        }
+    }
+
 
 }
