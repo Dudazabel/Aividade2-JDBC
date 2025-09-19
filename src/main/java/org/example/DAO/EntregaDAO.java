@@ -114,4 +114,25 @@ public class EntregaDAO {
 
         return motorista;
     }
+
+    public List<Entrega> atrasadasCidade()throws  SQLException{
+        String query = "SELECT c.cidade, COUNT(e.id_entrega) AS quantidade_entregas FROM entrega e JOIN pedido p ON e.id_pedido = p.id_pedido JOIN cliente c ON p.id_cliente = c.id_cliente WHERE e.status_entrega = 'atrasada' GROUP BY c.cidade ORDER BY c.cidade;";
+
+        List<Entrega> entregas = new ArrayList<>();
+
+        try(Connection conn = conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(query)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                String cidade = rs.getString("cidade");
+                int quantidade = rs.getInt("quantidade_entregas");
+
+                var entrega = new Entrega(cidade, quantidade);
+                entregas.add(entrega);
+            }
+        }
+
+        return entregas;
+    }
 }

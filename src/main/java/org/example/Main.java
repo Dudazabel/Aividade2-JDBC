@@ -81,10 +81,10 @@ public class Main {
                 relatorioPedidosPendentes();
             }
             case 11 ->{
-
+                relatorioEntregaAtrasada();
             }
             case 12 ->{
-
+                buscarPedidoCPF();
             }
             case 13 ->{
 
@@ -429,6 +429,34 @@ public class Main {
             System.out.println("Quantidade de pedidos pendente: " + pedido.getQuantidade_pedidos());
             System.out.println("----------------");
         }
+    }
+
+    public static void relatorioEntregaAtrasada(){
+        System.out.println("---ENTREGAS ATRASADAS---");
+
+        var dao = new EntregaDAO();
+
+        try{
+            List<Entrega> entregas = dao.atrasadasCidade();
+            entregasAtrasadas(entregas);
+
+        }catch(SQLException erro){
+            erro.printStackTrace();
+        }
+    }
+
+    public static void entregasAtrasadas(List<Entrega> entregas){
+
+        for(Entrega entrega : entregas){
+            System.out.println("----------------");
+            System.out.println("Cidade: " + entrega.getCidade());
+            System.out.println("Quantidade de entregas atrasada: " + entrega.getQuantidade_entregas());
+            System.out.println("----------------");
+        }
+    }
+
+    public static void buscarPedidoCPF() {
+
     }
 
 

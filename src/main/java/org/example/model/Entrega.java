@@ -13,6 +13,8 @@ public class Entrega {
     private String status_entrega;
     private String nome_motorista;
     private String nome_cliente;
+    private String cidade;
+    private int quantidade_entregas;
 
     public Entrega(int id_pedido, int id_motora, LocalDate data_saida, LocalDate data_entrega, String status_entrega) {
         this.id_pedido = id_pedido;
@@ -36,6 +38,11 @@ public class Entrega {
         this.status_entrega = status_entrega;
         this.nome_motorista = nome_motorista;
         this.nome_cliente = nome_cliente;
+    }
+
+    public Entrega(String cidade, int quantidade_entregas) {
+        this.cidade = cidade;
+        this.quantidade_entregas = quantidade_entregas;
     }
 
     public int getId_pedido() {
@@ -100,5 +107,21 @@ public class Entrega {
 
     public void setNome_cliente(String nome_cliente) {
         this.nome_cliente = nome_cliente;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public int getQuantidade_entregas() {
+        return quantidade_entregas;
+    }
+
+    public void setQuantidade_entregas(int quantidade_entregas) {
+        this.quantidade_entregas = quantidade_entregas;
     }
 }
